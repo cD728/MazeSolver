@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "cell.h"
-#include "stack.h"
-#include "board.h"
-#include "maze.h"
-#include "pathfind.h"
+#include "cell/cell.h"
+#include "stack/stack.h"
+#include "board/board.h"
+#include "maze/maze.h"
+#include "pathfind/pathfind.h"
 
 void reDefine(Board board, Cell** start, Cell** end, int height, int width) {
     *start = &board[0][0];

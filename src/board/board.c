@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "cell.h"
-#include "board.h"
+#include "../cell/cell.h"
+#include "../board/board.h"
 
 Board createBoard(int x, int y) {
   Board board = (Board) malloc(sizeof(Cell*) * x);

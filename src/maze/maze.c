@@ -1,8 +1,8 @@
 #include <raylib.h>
 #include <stdlib.h>
-#include "cell.h"
-#include "board.h"
-#include "stack.h"
+#include "../cell/cell.h"
+#include "../board/board.h"
+#include "../stack/stack.h"
 
 int recursiveMazeStack(Board board, int side, int width, int height, Color rectFill, int lineThick, Color rectOut, bool noDrawing) {
     int x = GetRandomValue(0, height - 1);

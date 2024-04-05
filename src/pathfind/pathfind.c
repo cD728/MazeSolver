@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <raylib.h>
-#include "pathfind.h"
-#include "queue.h"
-#include "cell.h"
+#include "../pathfind/pathfind.h"
+#include "../queue/queue.h"
+#include "../cell/cell.h"
 
 int manhattanDistance(Cell* cell0, Cell* cell1) {
   return abs(cell0->x - cell1->x) + abs(cell0->y - cell1->y);

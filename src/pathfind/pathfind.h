@@ -1,6 +1,6 @@
-#ifndef ASTAR_H_
-#define ASTAR_H_
-#include "board.h"
+#ifndef PATHFIND_H_
+#define PATHFIND_H_
+#include "../board/board.h"
 
 typedef enum {
     ASTAR,

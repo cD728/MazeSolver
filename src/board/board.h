@@ -1,6 +1,6 @@
 #ifndef BOARD_H_
 #define BOARD_H_
-#include "cell.h"
+#include "../cell/cell.h"
 
 typedef Cell** Board;
 

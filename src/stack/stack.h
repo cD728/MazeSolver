@@ -1,6 +1,6 @@
 #ifndef STACK_H_
 #define STACK_H_
-#include "cell.h"
+#include "../cell/cell.h"
 
 typedef struct {
   Cell* cell;
