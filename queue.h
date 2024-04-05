@@ -4,17 +4,15 @@
 #include "cell.h"
 
 typedef struct queue {
-   double priority;
+   int priority;
    Cell* cell;
-   struct queue* next;
 } Queue;
 
-Queue* createQueue(Cell* cell, double priority);
-int isEmptyQueue(Queue* queue);
-void insert(Queue** queue, Cell* cell, double priority);
-double find(Queue* queue, Cell* cell);
-Cell* removeFirst(Queue** queue);
-void removeCell(Queue** queue, Cell* cell);
-void freeQueue(Queue** queue);
+Queue* createQueue(Cell* cell, int priority, int* size);
+void insert(Queue** queue, Cell* cell, int priority, int* size);
+int find(Queue* queue, Cell* cell, int size);
+Cell* removeFirst(Queue** queue, int* size);
+void removeCell(Queue** queue, Cell* cell, int* size);
+void freeQueue(Queue* queue);
 
 #endif

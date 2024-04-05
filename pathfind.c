@@ -17,7 +17,8 @@ double absoluteDistance(Cell* cell0, Cell* cell1) {
 }
 
 int Astar(Cell** board, Cell* start, Cell* end, int height, int width, int side, Color rectFill, int lineThick, Color rectOut, bool noDrawing) {
-    Queue* openCells = createQueue(start, 0);
+    int size;
+    Queue* openCells = createQueue(start, 0, &size);
     bool closedCells[height][width];
 
     for (int i = 0; i < height; i++) {
@@ -28,14 +29,14 @@ int Astar(Cell** board, Cell* start, Cell* end, int height, int width, int side,
 
     closedCells[0][0] = true;    
 
-    while (!isEmptyQueue(openCells)) {
+    while (size > 0) {
         if (WindowShouldClose() || (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_ESCAPE))) return 1;
         if (!noDrawing && IsKeyPressed(KEY_ESCAPE)) noDrawing = !noDrawing;
 
-        Cell* currentCell = removeFirst(&openCells);
+        Cell* currentCell = removeFirst(&openCells, &size);
 
         if (currentCell == end) {
-            freeQueue(&openCells);
+            freeQueue(openCells);
             return 0;
         }
         if (currentCell != start) currentCell->state = PATH;
@@ -62,14 +63,14 @@ int Astar(Cell** board, Cell* start, Cell* end, int height, int width, int side,
                     board[x][y].distance = tentativeG;
                     board[x][y].state = VISITED;
                     board[x][y].prev = (struct cell*) currentCell;
-                    double fScore = board[x][y].distance + manhattanDistance(&board[x][y], end);
-                    double distance = find(openCells, &board[x][y]);
+                    int fScore = board[x][y].distance + manhattanDistance(&board[x][y], end);
+                    int distance = find(openCells, &board[x][y], size);
                     if (distance != -1) {
-                        removeCell(&openCells, &board[x][y]);
-                        insert(&openCells, &board[x][y], fScore);
+                        removeCell(&openCells, &board[x][y], &size);
+                        insert(&openCells, &board[x][y], fScore, &size);
                     } else {
                         closedCells[x][y] = true;
-                        insert(&openCells, &board[x][y], fScore);
+                        insert(&openCells, &board[x][y], fScore, &size);
                     }
                 }
             }
@@ -83,12 +84,13 @@ int Astar(Cell** board, Cell* start, Cell* end, int height, int width, int side,
             EndDrawing();
         }
     }
-    freeQueue(&openCells);
+    freeQueue(openCells);
     return 0;
 }
 
 int dijkstra(Cell** board, Cell* start, Cell* end, int height, int width, int side, Color rectFill, int lineThick, Color rectOut, bool noDrawing) {
-    Queue* openCells = createQueue(start, 0);
+    int size;
+    Queue* openCells = createQueue(start, 0, &size);
     bool closedCells[height][width];
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -97,14 +99,14 @@ int dijkstra(Cell** board, Cell* start, Cell* end, int height, int width, int si
     }
 
     closedCells[0][0] = true; 
-    while (!isEmptyQueue(openCells)) {
-        Cell* currentCell = removeFirst(&openCells);
+    while (size > 0) {
+        Cell* currentCell = removeFirst(&openCells, &size);
 
         if (WindowShouldClose() || (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_ESCAPE))) return 1;
         if (!noDrawing && IsKeyPressed(KEY_ESCAPE)) noDrawing = !noDrawing;
 
         if (currentCell == end) {
-            freeQueue(&openCells);
+            freeQueue(openCells);
             return 0;
         }
         if (currentCell != start) currentCell->state = PATH;
@@ -131,12 +133,12 @@ int dijkstra(Cell** board, Cell* start, Cell* end, int height, int width, int si
                     board[x][y].distance = tentativeG;
                     board[x][y].state = VISITED;
                     board[x][y].prev = (struct cell*) currentCell;
-                    if (find(openCells, &board[x][y]) != -1) {
-                        removeCell(&openCells, &board[x][y]);
-                        insert(&openCells, &board[x][y], tentativeG);
+                    if (find(openCells, &board[x][y], size) != -1) {
+                        removeCell(&openCells, &board[x][y], &size);
+                        insert(&openCells, &board[x][y], tentativeG, &size);
                     } else {
                         closedCells[x][y] = true;
-                        insert(&openCells, &board[x][y], tentativeG);
+                        insert(&openCells, &board[x][y], tentativeG, &size);
                     }
                 }
             }
@@ -151,6 +153,6 @@ int dijkstra(Cell** board, Cell* start, Cell* end, int height, int width, int si
         }
     }
 
-    freeQueue(&openCells);
+    freeQueue(openCells);
     return 0;
 }
