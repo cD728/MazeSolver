@@ -75,7 +75,7 @@ int main(void) {
     #endif
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-    InitWindow(width*side, height*side, "bruh eu sou pan");  
+    InitWindow(width*side, height*side, "Maze Solver");  
 
     Color rectFill = GRAY;
     Color rectOut = BLACK;
